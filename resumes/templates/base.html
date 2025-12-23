@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/resumes.css' %}">
+    <title>Build Your Resumes</title>
+  </head>
+  <header>
+    <nav>
+      <div class="sidebar">
+          {% if request.user.is_authenticated %}
+            <div class="section">
+                <div><a class ="item" href="{% url 'home' %}">Home</a></div>
+                <div><a class ="item" href="{% url 'create_resume' %}">Create new resume</a></div>
+                <div><a class ="item" href="{% url 'create_education' %}">Add an education</a></div>
+                <div><a class ="item" href="{% url 'create_employment' %}">Add an employment</a></div>
+                <div><a class ="item" href="{% url 'create_project' %}">Add a project</a></div>
+                <div><a class ="item" href="{% url 'create_skills' %}">Add a skillset</a></div>
+                <div><a class ="item" href="{% url 'create_job_description' %}">Create Job Description</a></div>
+                <div><a class ="item" href="{% url 'create_project_description' %}">Create Project Description</a></div>
+                <div><a class ="item" href="{% url 'logout' %}">Logout</a></div>
+            </div>
+          {% else %}
+            <div class="section">
+              <div><a class ="item" href="{% url 'signup' %}"> Sign up</a></div>
+              <div><a class ="item" href="{% url 'login' %}">Login</a></div>
+            </div>
+          {% endif %}
+    </nav>
+  </header>
+  <body>
+
+      <section>
+        {% block content %}
+        {% endblock content %}
+      </section>
+
+  </body>
+</html>

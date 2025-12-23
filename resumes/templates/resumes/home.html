@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main>
+    <div class ="spacer">
+        <h1>Welcome</h1>
+        <p>
+            {% comment %} <a href ="{% url 'create_project' %}">Create new project</a> {% endcomment %}
+            {% if resume_list %}
+                <h2>Resumes you've made</h2>
+                <ul>
+                    {% for resume in resume_list  %}
+                        <tr>
+                            <li><a href="{% url 'show_resume' resume.id  %}">{{ resume.name }}</a></li>
+                            {% comment %} <td>{{ list.tasks.all|length }} {% endcomment %}
+                        </tr>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <p>You have not made any resumes yet!</p>
+                {% endif %}
+        </p>
+    </div>
+</main>
+
+
+{% endblock content %}

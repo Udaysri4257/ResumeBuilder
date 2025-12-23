@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <div>
+            <h1>Resume</h1>
+            <p>
+                <a class="pdfdl" href="{% url 'create_resume_pdf' resume_object.id %}" >Download as PDF</a>
+                <a class="pdfdl" href="{% url 'delete_resume' resume_object.id %}" >Delete Resume</a>
+            </p>
+        </div>
+
+        <table class="detailtable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ resume_object.name }}</td>
+                    <td>{{ resume_object.phone }}</td>
+                    <td>{{ resume_object.email }}</td>
+                    <td>{{ resume_object.created_on|date:"M Y"}}</td>
+            </tbody>
+        </table>
+
+        <table class="detailtable">
+            <thead>
+                <tr>
+                    <th>School</th>
+                    <th>Degree</th>
+                    <th>Start Date</th>
+                    <th>Until</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ed in resume_object.education.all %}
+                    <tr>
+                            <td>{{ ed.school }}</td>
+                            <td>{{ ed.degree}}</td>
+                            <td>{{ ed.start_date|date:"M Y"}}</td>
+                            <td>{{ ed.end_date|date:"M Y"}}</td>
+                            <td><a href="{% url 'delete_education' ed.id %}">Delete education</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="detailtable">
+            <thead>
+                <tr>
+                    <th>Employer/Position</th>
+                    <th>Start Date</th>
+                    <th>Until</th>
+                    <th>Description</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in resume_object.employment.all %}
+                    <tr>
+                        <td>{{ job.company }}/{{ job.position}}</td>
+                        <td>{{ job.start_date|date:"M Y"}}</td>
+                        <td>{{ job.end_date|date:"M Y"}}</td>
+                        <td>
+                            {% for descr in job.jobdescriptions.all %}
+                                <ul>
+                                    <li>{{ descr }}</li>
+                                </ul>
+                            {% endfor %}
+                        </td>
+                        <td><a href="{% url 'delete_employment' job.id %}">Delete employment</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="detailtable">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Description</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in resume_object.projects.all %}
+                    <tr>
+                        <td>{{ project.project_name }}</td>
+                        <td>{{ project.start_date|date:"M Y"}}</td>
+                        <td>{{ project.end_date|date:"M Y"}}</td>
+                        <td>
+                            {% for descr in project.projdescriptions.all %}
+                                <ul>
+                                    <li>{{ descr }}</li>
+                                </ul>
+                            {% endfor %}
+                        </td>
+                        <td><a href="{% url 'delete_project' project.id %}">Delete project</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="detailtable">
+            <thead>
+                <tr>
+                    <th>Skills</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for skill in resume_object.skillset.all %}
+                    <tr>
+                        <td>{{skill}}</td>
+                        <td><a href="{% url 'delete_skill' skill.id %}">Delete skill</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </main>
+{% endblock content %}
